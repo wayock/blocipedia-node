@@ -1,6 +1,6 @@
-//const userQueries = require("../db/queries.users.js");
-//const passport = require("passport");
-//const sgMail = require('@sendgrid/mail');
+const userQueries = require("../db/queries.users.js");
+const passport = require("passport");
+
 
 module.exports = {
 
@@ -8,14 +8,27 @@ module.exports = {
     res.render("users/signup");
   },
 
-  /* move inside of createconst sgMail & msg to signupController.js
-      const msg = {
-        to: 'wayock@gmail.com',
-        from: 'test@example.com',
-        subject: 'Blocipedia Account Created!',
-        text: 'and easy to do anywhere, even with Node.js',
-        html: '<strong>Your Blocipedia account has been created. Login to join the fun!</strong>',
-      };
-      sgMail.send(msg);
-  */
+  create(req, res, next){
+    console.log("user created");
+     let newUser = {
+       username: req.body.username,
+       email: req.body.email,
+       password: req.body.password,
+       passwordConfirmation: req.body.passwordConfirmation
+     };
+
+     userQueries.createUser(newUser, (err, user) => {
+       if(err){
+         req.flash("error", err);
+         res.redirect("/users/sign_up");
+       } else {
+
+         passport.authenticate("local")(req, res, () => {
+           req.flash("notice", "You've successfully signed in!");
+           res.redirect("/");
+         })
+       }
+     });
+   }
+
 }

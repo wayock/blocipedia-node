@@ -8,8 +8,7 @@ const flash = require("express-flash");
 const logger = require('morgan');
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-
-//const passportConfig = require("./passport-config");
+const passportConfig = require("./passport-config");
 
 module.exports = {
   init(app, express){
@@ -24,7 +23,7 @@ module.exports = {
        cookie: { maxAge: 1.21e+9 } //set cookie to expire in 14 days
      }));
      app.use(flash());
-  //   passportConfig.init(app);
+     passportConfig.init(app);
 
      app.use((req,res,next) => {
        res.locals.currentUser = req.user;

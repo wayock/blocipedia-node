@@ -7,7 +7,7 @@
 
     <% include ../static/partials/navbar.ejs %>
 
-    <main class="container">
+    <main class="container p-3 mb-2 bg-dark text-white">
 
       <% include ../static/partials/messages.ejs %>
 
@@ -16,8 +16,8 @@
       <form action="/users" method="POST">
 
         <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" class="form-control" name="name" aria-describedby="nameHelp" placeholder="Enter name">
+          <label for="username">Username</label>
+          <input type="text" class="form-control" name="username" aria-describedby="nameHelp" placeholder="Enter name">
 
         </div>
 
@@ -30,12 +30,13 @@
         <div class="form-group">
           <label for="password">Password</label>
           <input type="password" class="form-control" name="password" aria-describedby="passwordHelp" placeholder="Enter password">
-          <small class="text-muted" id="passwordHelp">password must match confirmation below</small>
+          <small class="text-muted" id="passwordHelp">must be at least 6 characters in length</small>
         </div>
 
         <div class="form-group">
           <label for="passwordConfirmation">Password confirmation</label>
           <input type="password" class="form-control" name="passwordConfirmation" aria-describedby="passwordHelp" placeholder="Enter password confirmation">
+          <small class="text-muted" id="passwordHelp">passwords must match</small>
         </div>
 
         <button type="submit" class="btn btn-primary">Sign Up</button>
