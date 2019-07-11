@@ -1,11 +1,11 @@
 //const userQueries = require("../db/queries.users.js");
 //const passport = require("passport");
-const sgMail = require('@sendgrid/mail');
+//const sgMail = require('@sendgrid/mail');
 
 module.exports = {
 
   signUp(req, res, next){
-    res.render("/users/sign_up");
+    res.render("users/signup");
   },
 
   /* move inside of createconst sgMail & msg to signupController.js
