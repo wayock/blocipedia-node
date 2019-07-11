@@ -14,8 +14,9 @@
         <% include ./partials/messages.ejs %>
 
         <!-- Jumbotron Header -->
-        <header class="jumbotron my-4">
+        <header style="text-align: center;" class="jumbotron my-4">
           <h1 class="display-3">Welcome to Blocipedia</h1>
+          <ion-icon name="laptop" style= "font-size: 200px;"></ion-icon>
           <p class="lead">An application for users to create, collaborate, and share wikis.</p>
           <a href="/users/sign_up" class="btn btn-primary btn-lg">Sign up</a>
         </header>
@@ -23,13 +24,15 @@
         <!-- Page Features -->
         <section class="row text-center">
 
-          <section class="col">
+          <section class="col-sm-6 border border-info rounded p-3 mb-2 bg-info text-white"">
             <h4 class="card-title">Free Plan</h4>
+            <ion-icon name="people" style= "font-size: 100px;"></ion-icon>
             <p class="card-text">Create as many public plans as you want.</p>
           </section>
 
-          <section class="col">
+          <section class="col-sm-6 border border-dark rounded p-3 mb-2 bg-dark text-white">
             <h4 class="card-title">Premium Plan</h4>
+            <ion-icon name="finger-print" style= "font-size: 100px;" ></ion-icon>
             <p class="card-text">Create private wikis.</p>
           </section>
 
@@ -40,5 +43,6 @@
       <!-- /.container -->
 
       <% include ./partials/baseScripts.ejs %>
+      <script src="https://unpkg.com/ionicons@4.5.5/dist/ionicons.js"></script>
     </body>
 </html>
