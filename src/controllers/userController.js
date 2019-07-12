@@ -32,7 +32,7 @@ module.exports = {
    },
 
    signInForm(req, res, next){
-          res.render("users/sign_in");
+          res.render("users/signin");
         },
 
    signIn(req, res, next){
@@ -46,5 +46,13 @@ module.exports = {
              }
          })
      },
+
+   signOut(req, res, next){
+           req.logout();
+           req.flash("notice", "You've successfully signed out!");
+           res.redirect("/");
+      },
+
+    
 
 }
