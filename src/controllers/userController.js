@@ -9,7 +9,7 @@ module.exports = {
   },
 
   create(req, res, next){
-    console.log("user created");
+    //console.log("user created");
      let newUser = {
        username: req.body.username,
        email: req.body.email,
@@ -53,6 +53,6 @@ module.exports = {
            res.redirect("/");
       },
 
-    
+
 
 }
