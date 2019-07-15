@@ -2,7 +2,7 @@ const sequelize = require("../../src/db/models/index").sequelize;
 const Wiki = require("../../src/db/models").Wiki;
 const User = require("../../src/db/models").User;
 
-describe("Topic", () => {
+describe("Wiki", () => {
 
    beforeEach((done) => {
      this.user;
