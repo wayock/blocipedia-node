@@ -27,7 +27,7 @@ describe("routes : wikis", () => {
            userId: this.user.id
          })
          .then((wiki) => {
-           console.log(wiki);
+           //console.log(wiki);
            this.wiki = wiki;
            done();
          })
@@ -75,6 +75,7 @@ describe("routes : wikis", () => {
         form: {
           title: "Watching snow melt",
           body: "Without a doubt my favoriting things to do besides watching paint dry!",
+          private: false,
           userId: this.user.id
         }
       };
@@ -83,7 +84,8 @@ describe("routes : wikis", () => {
 
           Wiki.findOne({where: {title: "Watching snow melt"}})
           .then((wiki) => {
-            console.log(wiki);
+          //  console.log(wiki);
+            expect(res.statusCode).toBe(303);
             expect(wiki.title).toBe("Watching snow melt");
             expect(wiki.body).toBe("Without a doubt my favoriting things to do besides watching paint dry!");
             done();
@@ -92,9 +94,9 @@ describe("routes : wikis", () => {
             console.log(err);
             done();
           });
-        }
-      );
+        });
      });
+   });
 
   /*   it("should not create a new post that fails validations", (done) => {
             const options = {
@@ -158,6 +160,7 @@ describe("routes : wikis", () => {
 
     });
 
+
     describe("GET /wikis/:id/edit", () => {
 
          it("should render a view with an edit wiki form", (done) => {
@@ -210,6 +213,4 @@ describe("routes : wikis", () => {
          });
 
      });
-
-});
-});
+  });
