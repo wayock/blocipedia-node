@@ -11,7 +11,7 @@ module.exports = {
     */
 
     return queryInterface.addColumn(
-         "Wiki",
+         "Wikis",
          "userId",
          {
            type: Sequelize.INTEGER,
@@ -35,6 +35,6 @@ module.exports = {
       Example:
       return queryInterface.dropTable('users');
     */
-    return queryInterface.removeColumn("Wiki", "userId");
+    return queryInterface.removeColumn("Wikis", "userId");
   }
 };
