@@ -6,12 +6,12 @@
   <body>
     <% include ../static/partials/navbar.ejs %>
 
-    <main class="container">
+    <main class="container p-3 mb-2 bg-light text-dark border border-dark">
       <h1><%= wiki.title %></h1>
 
 
         <%# if(currentUser.isAdmin()) { %>
-        
+
           <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-warning">Edit</a>
 
         <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
