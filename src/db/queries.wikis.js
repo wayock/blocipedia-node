@@ -17,10 +17,8 @@ module.exports = {
 
 
   addWiki(newWiki, callback) {
-    console.log("addWiki() is called.");
     return Wiki.create(newWiki)
     .then((wiki) => {
-      console.log("SUCCESS: ", wiki);
       callback(null, wiki);
     })
     .catch((err) => {

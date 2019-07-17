@@ -16,24 +16,17 @@ module.exports = {
       res.render("wikis/new");
    },
   create(req, res, next){
-     console.log("wikiController.create() is called.");
      let newWiki= {
        title: req.body.title,
        body: req.body.body,
        private: false,
        userId: req.user.id
      };
-     console.log("newWiki", newWiki);
      wikiQueries.addWiki(newWiki, (err, wiki) => {
-       console.log("In addWiki");
-       console.log(newWiki);
        if(err){
-         console.log("ERRORS!");
          console.log(err);
          res.redirect(500, "/wikis/new");
        } else {
-         console.log("SUCCESS!");
-         console.log(newWiki);
          res.redirect(303, `/wikis/${wiki.id}`);
        }
      });

@@ -19,7 +19,7 @@ module.exports = {
   },
 
   validateWikis(req, res, next) {
-      console.log("validateWikis");
+      //console.log("validateWikis");
   //#1
       if(req.method === "POST") {
 

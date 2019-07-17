@@ -20,7 +20,14 @@ describe("routes : wikis", () => {
        })
        .then((user) => {
          this.user = user;
-
+         request.get({
+            url: "http://localhost:3000/auth/fake",
+            form: {
+              id: user.id,
+              username: user.name,
+              email: user.email
+            }
+          });
          Wiki.create({
            title: "Winter Games",
            body: "Post your Winter Games stories.",
@@ -81,11 +88,8 @@ describe("routes : wikis", () => {
       };
       request.post(options,
         (err, res, body) => {
-          console.log('BODY', body);
-          console.log('ERR', err);
           Wiki.findOne({where: {title: "Watching snow melt"}})
           .then((wiki) => {
-            console.log(wiki);
             expect(res.statusCode).toBe(303);
             expect(wiki.title).toBe("Watching snow melt");
             expect(wiki.body).toBe("Without a doubt my favoriting things to do besides watching paint dry!");
@@ -179,10 +183,11 @@ describe("routes : wikis", () => {
 
          it("should return a status code 302", (done) => {
            request.post({
-             url: `${base}/wikis/${this.wiki.id}/update`,
+             url: `${base}/${this.wiki.id}/update`,
              form: {
                title: "Snowman Building Competition",
-               body: "I love watching them melt slowly."
+               body: "I love watching them melt slowly.",
+               userId: this.user.id
              }
            }, (err, res, body) => {
              expect(res.statusCode).toBe(302);
@@ -192,7 +197,7 @@ describe("routes : wikis", () => {
 
          it("should update the wiki with the given values", (done) => {
              const options = {
-               url: `${base}/wikis/${this.wiki.id}/update`,
+               url: `${base}/${this.wiki.id}/update`,
                form: {
                  title: "Snowman Building Competition",
                  body: "I really enjoy the funny hats on them."
