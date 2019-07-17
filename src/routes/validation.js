@@ -16,5 +16,30 @@ module.exports = {
     } else {
       return next();
     }
-  }
+  },
+
+  validateWikis(req, res, next) {
+
+  //#1
+      if(req.method === "POST") {
+
+  //#2
+        req.checkParams("userId", "must be valid").notEmpty().isInt();
+        req.checkBody("title", "must be at least 1 character in length").isLength({min: 1});
+        req.checkBody("body", "must be at least 1 character in length").isLength({min: 1});
+      }
+
+  //#3
+      const errors = req.validationErrors();
+
+      if (errors) {
+
+  //#4
+        req.flash("error", errors);
+        return res.redirect(303, req.headers.referer)
+      } else {
+        return next();
+      }
+    },
+
 }

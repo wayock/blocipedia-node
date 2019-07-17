@@ -81,10 +81,12 @@ describe("routes : wikis", () => {
       };
       request.post(options,
         (err, res, body) => {
-
+          console.log('BODY', body);
+          console.log('ERR', err);
           Wiki.findOne({where: {title: "Watching snow melt"}})
           .then((wiki) => {
-          //  console.log(wiki);
+            console.log(user);
+            console.log(wiki);
             expect(res.statusCode).toBe(303);
             expect(wiki.title).toBe("Watching snow melt");
             expect(wiki.body).toBe("Without a doubt my favoriting things to do besides watching paint dry!");

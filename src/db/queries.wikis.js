@@ -16,15 +16,18 @@ module.exports = {
 },
 
 
-  addWiki(newWiki, callback){
-      return Wiki.create(newWiki)
-      .then((wiki) => {
-        callback(null, wiki);
-      })
-      .catch((err) => {
-        callback(err);
-      })
-    },
+  addWiki(newWiki, callback) {
+    console.log("addWiki() is called.");
+    return Wiki.create(newWiki)
+    .then((wiki) => {
+      console.log("SUCCESS: ", wiki);
+      callback(null, wiki);
+    })
+    .catch((err) => {
+      console.log("ERROR: ", err);
+      callback(err);
+    })
+  },
   getWiki(id, callback){
     return Wiki.findByPk(id)
      .then((wiki) => {

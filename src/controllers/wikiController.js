@@ -15,7 +15,7 @@ module.exports = {
   new(req, res, next){
       res.render("wikis/new");
    },
-   create(req, res, next){
+  create(req, res, next){
      console.log("wikiController.create() is called.");
      let newWiki= {
        title: req.body.title,
@@ -23,6 +23,7 @@ module.exports = {
        private: false,
        userId: req.user.id
      };
+     console.log("newWiki", newWiki);
      wikiQueries.addWiki(newWiki, (err, wiki) => {
        console.log("In addWiki");
        console.log(newWiki);
@@ -34,7 +35,7 @@ module.exports = {
          console.log("SUCCESS!");
          console.log(newWiki);
          res.redirect(303, `/wikis/${wiki.id}`);
-       } 
+       }
      });
    },
     show(req, res, next){

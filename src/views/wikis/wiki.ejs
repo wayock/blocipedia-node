@@ -1,32 +1,43 @@
 <!DOCTYPE html>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 <html>
   <head>
     <% include ../static/partials/head.ejs %>
   </head>
-  <body>
-    <main class="container p-3 mb-2 bg-light text-dark border border-dark">
+  <body class="bg-light">
+    <main class="container p-3 mb-2 bg-white text-dark border border-dark">
       <% include ../static/partials/navbar.ejs %>
 
       <h1>Wikis</h1>
 
       <hr/>
+      <!-- <i class="material-icons" style= "font-size: 150px;">chrome_reader_mode</i> -->
+
+      <hr/>
 
       <%# if(currentUser && currentUser.isAdmin()) { %>
-         <a href="/wikis/new" class="btn btn-success">New Wiki</a>
+         <a href="/wikis/new" class="btn btn-success"><i class="material-icons">note_add</i>New Wiki</a>
       <%# } %>
 
       <hr/>
 
-      <ul class="list-group">
+      <ul class="list-group ">
 <!-- #1 -->
         <% wikis.forEach((wiki) => { %>
 <!-- #2 -->
-          <li class="list-group-item">
+          <li class="list-group-item bg-light">
             <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> <%#= wiki.userId.username %> </a>
           </li>
         <% }) %>
       </ul>
-
     </main>
+    <footer>
+      <div style="text-align: center;">
+        <!--
+        <small  class="text-muted" Icons made by <a href="https://www.freepik.com/?__hstc=57440181.1045770fe3e2ca3ddb05db76f66aefd2.1563308830979.1563308830979.1563308830979.1&__hssc=57440181.3.1563308830981&__hsfp=659114935" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"                 title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"                 title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a><small>
+        -->
+      </div>
+    </footer>
   </body>
 </html>
