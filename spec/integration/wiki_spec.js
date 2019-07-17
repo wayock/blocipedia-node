@@ -85,7 +85,6 @@ describe("routes : wikis", () => {
           console.log('ERR', err);
           Wiki.findOne({where: {title: "Watching snow melt"}})
           .then((wiki) => {
-            console.log(user);
             console.log(wiki);
             expect(res.statusCode).toBe(303);
             expect(wiki.title).toBe("Watching snow melt");

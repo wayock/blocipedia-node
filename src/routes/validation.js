@@ -19,19 +19,19 @@ module.exports = {
   },
 
   validateWikis(req, res, next) {
-
+      console.log("validateWikis");
   //#1
       if(req.method === "POST") {
 
   //#2
-        req.checkParams("userId", "must be valid").notEmpty().isInt();
-        req.checkBody("title", "must be at least 1 character in length").isLength({min: 1});
+        //req.checkParams("userId", "must be valid").notEmpty().isInt();
+        req.checkBody("title", "must be at least 1 character and no more than 30 in length").isLength({min: 1, max:30});
         req.checkBody("body", "must be at least 1 character in length").isLength({min: 1});
       }
 
   //#3
       const errors = req.validationErrors();
-
+      console.log(errors);
       if (errors) {
 
   //#4
