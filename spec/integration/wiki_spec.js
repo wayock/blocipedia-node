@@ -16,7 +16,8 @@ describe("routes : wikis", () => {
        User.create({
          username: "captian",
          email: "starman@tesla.com",
-         password: "Trekkie4lyfe"
+         password: "Trekkie4lyfe",
+         role: 0
        })
        .then((user) => {
          this.user = user;
@@ -25,7 +26,8 @@ describe("routes : wikis", () => {
             form: {
               id: user.id,
               username: user.name,
-              email: user.email
+              email: user.email,
+              role: user.role
             }
           });
          Wiki.create({

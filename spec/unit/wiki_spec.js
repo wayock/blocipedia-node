@@ -14,7 +14,7 @@ describe("Wiki", () => {
          username: "captian",
          email: "starman@tesla.com",
          password: "Trekkie4lyfe",
-         role: "member"
+         role: 0
 
        })
        .then((user) => {
@@ -84,7 +84,8 @@ describe("Wiki", () => {
           User.create({
             username: "adaexample",
             email: "ada@example.com",
-            password: "password"
+            password: "password",
+            role: 0
           })
           .then((newUser) => {
 
