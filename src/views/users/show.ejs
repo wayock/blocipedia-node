@@ -14,9 +14,26 @@
  <!-- #1 -->
       <h1><%= `${user.username}'s profile` %></h1>
 
+      <% if(currentUser.id === user.id) { %>
+        <a href="/users/<%= user.id %>/edit" class="btn btn-warning">Edit Profile</a>
+      <% } %>
       <hr>
 
-      <h2> Wiki-Wiki-What?</h2>
+      <h2> Latest Wikis</h2>
+
+      <ul class="list-unstyled">
+
+ <!-- #2 -->
+        <% if(wikis) { %>
+          <% wikis.forEach((wiki) => { %>
+ <!-- #3 -->
+            <li>
+              <a href="/wikis/<%= wiki.id %>">
+                <%= wiki.title %>
+              </a>
+            </li>
+          <% }) %>
+        <% } %>
 
 
     </main>

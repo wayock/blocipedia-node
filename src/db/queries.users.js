@@ -1,4 +1,5 @@
 const User = require("./models").User;
+const Wiki = require("./models").Wiki;
 const bcrypt = require("bcryptjs");
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -29,6 +30,29 @@ module.exports = {
     })
   },
 
-
-
+  getUser(id, callback){
+    // #1
+    let result = {};
+    User.findByPk(id)
+    .then((user) => {
+      // #2
+      if(!user) {
+        callback(404);
+      } else {
+        // #3
+        result["user"] = user;
+        // #4
+        Wiki.scope({method: ["lastFiveFor", id]}).findAll()
+        //Wiki.findAll()
+        .then((wikis) => {
+          // #5
+          result["wikis"] = wikis;
+          callback(null, result);
+        })
+        .catch((err) => {
+          callback(err);
+        })
+      }
+    })
+  }
 }
