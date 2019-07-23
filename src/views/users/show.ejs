@@ -6,7 +6,7 @@
   <body class="bg-light">
 
     <% include ../static/partials/navbar.ejs %>
-
+    <div class="Aligner">
     <main class="container p-3 mb-2 bg-white text-dark border border-dark">
 
       <% include ../static/partials/messages.ejs %>
@@ -22,7 +22,7 @@
             </p>
             <a
                 href="/users/<%= user.id %>/upgrade-page"
-                class="btn btn-primary btn-lg"
+                class="btn btn-primary btn"
                 >Upgrade Account</a
             >
             <% } if (currentUser.id === user.id && (currentUser.role == 1)) { %>
@@ -33,11 +33,14 @@
             </p>
             <a
                 href="/users/<%= currentUser.id %>/downgradeForm"
-                class="btn btn-primary btn-lg"
+                class="btn btn-primary btn"
                 >Downgrade</a
             >
             <% } if (currentUser.id === user.id && (currentUser.role == 2)) { %>
             <p>You are an <strong>Administrator</strong>.</p>
+
+            <!--add else "You must be signed in to view your profile page" -->
+
       <% } %>
 
       <!--
@@ -66,7 +69,7 @@
 
 
     </main>
-
+    </div>
     <% include ../static/partials/baseScripts.ejs %>
 
   </body>
