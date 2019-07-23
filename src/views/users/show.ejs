@@ -3,20 +3,49 @@
   <head>
     <% include ../static/partials/head.ejs %>
   </head>
-  <body>
+  <body class="bg-light">
 
     <% include ../static/partials/navbar.ejs %>
 
-    <main class="container p-3 mb-2 bg-dark text-white">
+    <main class="container p-3 mb-2 bg-white text-dark border border-dark">
 
       <% include ../static/partials/messages.ejs %>
 
  <!-- #1 -->
-      <h1><%= `${user.username}'s profile` %></h1>
+      <h1><%= `${user.username}'s Profile` %></h1>
 
-      <% if(currentUser.id === user.id) { %>
-        <a href="/users/<%= user.id %>/edit" class="btn btn-warning">Edit Profile</a>
+      <% if(currentUser.id === user.id && (currentUser.role == 0 || currentUser.role == null)) { %>
+            <p>
+                You have a <strong>Standard Account</strong>.
+                <br>
+                Upgrade your account to create and collaborate on private wikis!
+            </p>
+            <a
+                href="/users/<%= user.id %>/upgrade-page"
+                class="btn btn-primary btn-lg"
+                >Upgrade Account</a
+            >
+            <% } if (currentUser.id === user.id && (currentUser.role == 1)) { %>
+            <p>
+                You have a <strong>Premium Account</strong>.
+                <br>
+                If you need to downgrade your account, you can do that below.
+            </p>
+            <a
+                href="/users/<%= currentUser.id %>/downgradeForm"
+                class="btn btn-primary btn-lg"
+                >Downgrade</a
+            >
+            <% } if (currentUser.id === user.id && (currentUser.role == 2)) { %>
+            <p>You are an <strong>Administrator</strong>.</p>
       <% } %>
+
+      <!--
+        <% if(currentUser.id === user.id) { %>
+          <a href="/users/<%= user.id %>/edit" class="btn btn-warning">Edit Account</a>
+        <% } %>
+      -->
+
       <hr>
 
       <h2> Latest Wikis</h2>
@@ -28,7 +57,7 @@
           <% wikis.forEach((wiki) => { %>
  <!-- #3 -->
             <li>
-              <a href="/wikis/<%= wiki.id %>">
+              <a style="text-decoration: none; color: #0645AD ; border-bottom: 1px solid #0645AD ;"href="/wikis/<%= wiki.id %>">
                 <%= wiki.title %>
               </a>
             </li>

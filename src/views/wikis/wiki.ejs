@@ -10,9 +10,10 @@
       <% include ../static/partials/navbar.ejs %>
 
       <h1>Wikis</h1>
-
+      <!--
       <hr/>
-      <!-- <i class="material-icons" style= "font-size: 150px;">chrome_reader_mode</i> -->
+      <i class="material-icons" style= "font-size: 150px;">chrome_reader_mode</i>
+      -->
 
       <hr/>
 
@@ -26,8 +27,8 @@
 <!-- #1 -->
         <% wikis.forEach((wiki) => { %>
 <!-- #2 -->
-          <li class="list-group-item bg-light">
-            <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> <%#= wiki.userId.username %> </a>
+          <li class="list-group-item ">
+            <a style="text-decoration: none; color: #0645AD ; border-bottom: 1px solid #0645AD ; href="/wikis/<%= wiki.id %>"> <%= wiki.title %> <%#= wiki.userId.username %> </a>
           </li>
         <% }) %>
       </ul>

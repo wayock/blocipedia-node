@@ -4,19 +4,20 @@
     <link rel="stylesheet" href="/css/stripe.css">
     <% include ../static/partials/head.ejs %>
   </head>
-  <body>
+  <body class="bg-light">
 
     <% include ../static/partials/navbar.ejs %>
 
-    <main class="container p-3 mb-2 bg-dark text-white">
+    <main class="container p-3 mb-2 bg-white text-dark border border-dark">
 
       <% include ../static/partials/messages.ejs %>
 
  <!-- #1 -->
-      <h1><%= `Edit ${user.username}'s Profile` %></h1>
+      <h1><%= `${user.username}'s Account` %></h1>
 
       <hr>
 
+      <h2>Update Your Account to Premium Today &#128513;</h2>
 
 
 

@@ -67,15 +67,15 @@ module.exports = {
     });
   },
 
-  edit(req, res, next){
+  upgradePage(req, res, next){
         userQueries.getUser(req.params.id, (err, result) => {
           if(err || result == null){
             res.redirect(404, "/");
           } else {
-            res.render("users/edit", {user: result.user});
+            res.render("users/upgrade-page", {user: result.user});
           }
         });
       },
-  upgrade
+//  upgrade
 
 }
