@@ -54,5 +54,31 @@ module.exports = {
         })
       }
     })
-  }
+  },
+
+  upgradeUser(id, callback) {
+        User.findById(id)
+            .then(user => {
+                user.update({
+                    role: 1
+                });
+                callback(null, user);
+            })
+            .catch(err => {
+                callback(err);
+            });
+    },
+
+    downgradeUser(id, callback) {
+      User.findById(id)
+      .then(user => {
+        user.update({
+          role: 0
+        });
+        callback(null, user);
+      })
+      .catch(err => {
+        callback(err);
+      });
+    }
 }

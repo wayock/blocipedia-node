@@ -1,5 +1,31 @@
 const userQueries = require("../db/queries.users.js");
 const passport = require("passport");
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const publishableKey = process.env.PUBLISHABLE_KEY;
+// (async () => {
+//   const charge = await stripe.charges.create({
+//
+//     amount: 999,
+//     currency: 'usd',
+//     source: 'tok_visa',
+//     receipt_email: 'jenny.rosen@example.com',
+//   });
+//   console.log(charge);
+// }) ();
+// (async () => {
+//   const session = await stripe.checkout.sessions.create({
+//     payment_method_types: ['card'],
+//     subscription_data: {
+//       items: [{
+//         id: 'prod_FUhdT7toc8YxUa',
+//       }],
+//     },
+//     success_url: 'https://example.com/success',
+//     cancel_url: 'https://example.com/cancel',
+//   });
+//     console.log(session);
+// })();
+
 
 
 module.exports = {
@@ -76,6 +102,55 @@ module.exports = {
           }
         });
       },
-//  upgrade
+  upgrade(req, res, next) {
+    userQueries.upgradeUser(req.params.id, (err, result) => {
+      const amount = 1500;
+
+      stripe.customers
+      .create({
+        email: req.body.stripeEmail,
+        source: req.body.stripeToken
+      })
+      .then(customer => {
+        return stripe.charges.create({
+          amount,
+          description: "Blocipedia Premium Account",
+          currency: "usd",
+          customer: customer.id
+        });
+      })
+      .then(charge => {
+        console.log("charge", charge);
+        if (charge) {
+          req.flash(
+            "notice",
+            "WooWho!!! You're a premium user! Start making your private wikis."
+          );
+          res.redirect("/wikis");
+        } else {
+          req.flash("notice", "Error - upgrade unsuccessful");
+          res.redirect("/users/show", { user });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    });
+  },
+  downgrade(req, res, next) {
+    userQueries.downgradeUser(req.params.id, (err, result) => {
+      if (result) {
+        req.flash(
+          "notice",
+          "You have been downgraded to a standard member.  You can become a premium member again at any time!"
+        );
+        res.redirect("/wikis");
+      } else {
+        req.flash("notice", "Error: Something went wrong.  Please try to downgrade again.");
+        res.redirect("/users/show", { user });
+      }
+    });
+  }
+
 
 }

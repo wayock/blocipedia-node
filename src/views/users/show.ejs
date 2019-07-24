@@ -18,30 +18,55 @@
             <p>
                 You have a <strong>Standard Account</strong>.
                 <br>
-                Upgrade your account to create and collaborate on private wikis!
+                <br>
+                Want to create and collaborate on private wikis?
+                <br>
+                For only $15 you can!  Upgrade your account and become a premium user.
+                <br>
+                <br>
+                Ready to upgrade? Pay with your card below.
+
             </p>
-            <a
-                href="/users/<%= user.id %>/upgrade-page"
-                class="btn btn-primary btn"
-                >Upgrade Account</a
-            >
+            <form action="/users/<%= currentUser.id %>/upgrade" method="POST">
+                <script
+                    src="https://checkout.stripe.com/checkout.js"
+                    class="stripe-button"
+                    data-amount="1500"
+                    data-key="pk_test_LLN4nauYNgVOWi1cGRdkAH2P00FzimXJcn"
+                    data-name="Blocpedia"
+                    data-description="Blocipedia Premium Account"
+                    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                    data-locale="auto"
+                ></script>
+            </form>
+
+            <!-- <a
+              href="/users/<%= user.id %>/upgrade-page"
+              class="btn btn-primary btn"
+              >Upgrade Account
+            </a>-->
+
             <% } if (currentUser.id === user.id && (currentUser.role == 1)) { %>
             <p>
                 You have a <strong>Premium Account</strong>.
                 <br>
+                <br>
                 If you need to downgrade your account, you can do that below.
             </p>
-            <a
-                href="/users/<%= currentUser.id %>/downgradeForm"
-                class="btn btn-primary btn"
-                >Downgrade</a
-            >
+            <br>
+            <form action="/users/<%= currentUser.id %>" method="POST" onsubmit="return confirm('Are you sure you want to downgrade?  All private wikis will become public.');" >
+              <button type="Submit" class="btn btn-warning">
+                  Downgrade Account
+              </button>
+          </form>
             <% } if (currentUser.id === user.id && (currentUser.role == 2)) { %>
             <p>You are an <strong>Administrator</strong>.</p>
+            <% } else { %>
+              <p> </p>
 
-            <!--add else "You must be signed in to view your profile page" -->
+            <% } %>
 
-      <% } %>
+
 
       <!--
         <% if(currentUser.id === user.id) { %>

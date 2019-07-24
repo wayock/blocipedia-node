@@ -10,6 +10,10 @@ router.get("/users/:id", userController.show);
 router.get("/users/:id/upgrade-page", userController.upgradePage);
 router.post("/users", validation.validateUsers, userController.create);
 router.post("/users/sign_in", validation.validateUsers, userController.signIn);
+router.post("/users/:id/upgrade", userController.upgrade);
+router.post("/users/:id", userController.downgrade);
+
+
 
 
 
