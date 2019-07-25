@@ -80,17 +80,20 @@ module.exports = {
   },
 
   show(req, res, next){
+    if (req.user && req.user.id == req.params.id){
+      userQueries.getUser(req.params.id, (err, result) => {
 
-    userQueries.getUser(req.params.id, (err, result) => {
+        if(err || result.user === undefined){
+          req.flash("notice", "No user found with that ID.");
+          res.redirect("/");
+        } else {
+          res.render("users/show", {...result});
+        }
+      });
+   } else {
+     res.redirect(403, "/");
+   }
 
-      if(err || result.user === undefined){
-        req.flash("notice", "No user found with that ID.");
-        res.redirect("/");
-      } else {
-
-        res.render("users/show", {...result});
-      }
-    });
   },
 
   upgradePage(req, res, next){
@@ -120,16 +123,14 @@ module.exports = {
         });
       })
       .then(charge => {
-        console.log("charge", charge);
+        //console.log("charge", charge);
         if (charge) {
-          req.flash(
-            "notice",
-            "WooWho!!! You're a premium user! Start making your private wikis."
-          );
-          res.redirect("/wikis");
+          console.log(result);
+          req.flash("notice", "WooWho!!! You're a premium user! Start making your private wikis.");
+          res.redirect("/users/" + req.user.id);
         } else {
           req.flash("notice", "Error - upgrade unsuccessful");
-          res.redirect("/users/show", { user });
+          res.redirect("/users/" + req.user.id);
         }
       })
       .catch(err => {
@@ -140,14 +141,15 @@ module.exports = {
   downgrade(req, res, next) {
     userQueries.downgradeUser(req.params.id, (err, result) => {
       if (result) {
+        console.log(result);
         req.flash(
           "notice",
           "You have been downgraded to a standard member.  You can become a premium member again at any time!"
         );
-        res.redirect("/wikis");
+        res.redirect("/users/" + req.user.id);
       } else {
         req.flash("notice", "Error: Something went wrong.  Please try to downgrade again.");
-        res.redirect("/users/show", { user });
+        res.redirect("/users/" + req.user.id);
       }
     });
   }
