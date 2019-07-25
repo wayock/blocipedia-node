@@ -106,7 +106,7 @@ module.exports = {
         });
       },
   upgrade(req, res, next) {
-    userQueries.upgradeUser(req.params.id, (err, result) => {
+
       const amount = 1500;
 
       stripe.customers
@@ -125,9 +125,11 @@ module.exports = {
       .then(charge => {
         //console.log("charge", charge);
         if (charge) {
-          console.log(result);
-          req.flash("notice", "WooWho!!! You're a premium user! Start making your private wikis.");
-          res.redirect("/users/" + req.user.id);
+          userQueries.upgradeUser(req.params.id, (err, result) => {
+            console.log(result);  
+            req.flash("notice", "WooWho!!! You're a premium user! Start making your private wikis.");
+            res.redirect("/users/" + req.user.id);
+          });
         } else {
           req.flash("notice", "Error - upgrade unsuccessful");
           res.redirect("/users/" + req.user.id);
@@ -136,7 +138,7 @@ module.exports = {
       .catch(err => {
         console.log(err);
       });
-    });
+
   },
   downgrade(req, res, next) {
     userQueries.downgradeUser(req.params.id, (err, result) => {
