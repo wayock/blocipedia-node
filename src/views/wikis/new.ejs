@@ -19,6 +19,17 @@
           <label for="body">Body</label>
           <textarea rows="4" class="form-control" name="body" placeholder="Enter Body"></textarea>
         </div>
+        <div>
+        <% if (currentUser.role == 1) { %>
+            <label for="private">View:</label>
+              <select>
+                <option value="private">Private</option>
+                <option value="public">Public</option>
+              </select>
+        <%  } %>
+        <br>
+        <br>
+        </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
 
