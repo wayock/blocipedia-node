@@ -1,20 +1,39 @@
 const Wiki = require("./models").Wiki;
 const User = require("./models").User;
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
 
 module.exports = {
 
   getAllWikis(callback){
-  return Wiki.findAll()
+    return Wiki.findAll()
 
-  .then((wikis) => {
-    callback(null, wikis);
-  })
-  .catch((err) => {
-    callback(err);
-  })
-},
+    .then((wikis) => {
+      callback(null, wikis);
+    })
+    .catch((err) => {
+      callback(err);
+    })
+  },
+  getPublicWikis(user, callback){
+    let options;
+    if (user) {
+      options = {[Op.or]:[{userId:user.id}, {private:false}]}
 
+    } else {
+      options = {
+        private:false
+      };
+    }
+    return Wiki.findAll({where: options})
+     .then((wiki) => {
+       callback(null, wiki);
+     })
+     .catch((err) => {
+       callback(err);
+     })
+   },
 
   addWiki(newWiki, callback) {
     return Wiki.create(newWiki)
@@ -26,6 +45,7 @@ module.exports = {
       callback(err);
     })
   },
+
   getWiki(id, callback){
     return Wiki.findByPk(id)
      .then((wiki) => {
@@ -35,6 +55,7 @@ module.exports = {
        callback(err);
      })
    },
+
    deleteWiki(id, callback){
         return Wiki.destroy({
           where: { id }
@@ -63,6 +84,19 @@ module.exports = {
              callback(err);
            });
          });
+     },
+
+     changeToPublic(id, callback) {
+       return Wiki.findById(id)
+       .then(wiki => {
+         wiki.update({
+           private: false
+         });
+         callback(null, wiki);
+       })
+       .catch(err => {
+         console.log(err);
+       });
      },
 
 }

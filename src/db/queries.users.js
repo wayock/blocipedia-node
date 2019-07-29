@@ -1,5 +1,6 @@
 const User = require("./models").User;
 const Wiki = require("./models").Wiki;
+const wikiQueries = require("./queries.wikis.js");
 const bcrypt = require("bcryptjs");
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -70,10 +71,15 @@ module.exports = {
     },
 
     downgradeUser(id, callback) {
-      User.findById(id)
+      User.findByPk(id)
       .then(user => {
         user.update({
           role: 0
+        });
+        //iterate over user.wikis
+        //forEach set wikiQueries.changeToPublic
+        user.wikis.forEach(wiki => {
+          wikiQueries.changeToPublic(wiki.id, () => {});
         });
         callback(null, user);
       })

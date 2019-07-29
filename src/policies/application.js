@@ -8,15 +8,15 @@ module.exports = class ApplicationPolicy {
 
  // #2
   _isOwner() {
-    return this.record && (this.record.userId == this.user.id);
+    return this.record && this.record.userId == this.user.id;
   }
 
   _isMember() {
-    return this.user && this.user.role == 0);
+    return this.user && this.user.role == 0;
   }
 
   _isPremium() {
-    return this.user && this.user.role == 1);
+    return this.user && this.user.role == 1;
   }
 
   _isAdmin() {
@@ -39,7 +39,7 @@ module.exports = class ApplicationPolicy {
  // #4
   edit() {
     return this.new() &&
-      this.record && (this._isOwner() || this._isAdmin());
+      this.record && (this._isMember() || this._isPremium() || this._isAdmin());
   }
 
   update() {

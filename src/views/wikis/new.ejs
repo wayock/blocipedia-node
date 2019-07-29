@@ -20,11 +20,11 @@
           <textarea rows="4" class="form-control" name="body" placeholder="Enter Body"></textarea>
         </div>
         <div>
-        <% if (currentUser.role == 1) { %>
+        <% if (currentUser.role == 1 || currentUser.role == 2) { %>
             <label for="private">View:</label>
-              <select>
-                <option value="private">Private</option>
-                <option value="public">Public</option>
+              <select name="private"  id="private">
+                <option value=true>Private</option>
+                <option value=false>Public</option>
               </select>
         <%  } %>
         <br>

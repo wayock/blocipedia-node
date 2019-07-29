@@ -23,6 +23,17 @@
           <textarea rows="4" class="form-control" name="body" placeholder="Enter Description"><%= wiki.body %></textarea>
           <small class="text-muted" id="bodyHelp">body must be 10 or more characters in length.</small>
         </div>
+        <div>
+        <% if (currentUser.role == 1 || 2) { %>
+            <label for="private">View:</label>
+              <select name="private"  id="private">
+                <option value=true>Private</option>
+                <option value=false>Public</option>
+              </select>
+        <%  } %>
+        <br>
+        <br>
+        </div>
         <button type="submit" class="btn btn-primary">Update</button>
       </form>
     </main>

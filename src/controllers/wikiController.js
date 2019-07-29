@@ -1,9 +1,12 @@
 const wikiQueries = require("../db/queries.wikis.js");
+const Authorizer = require("../policies/wiki");
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
 module.exports = {
 
   index(req, res, next){
-    wikiQueries.getAllWikis((err, wikis) => {
+    wikiQueries.getPublicWikis(req.user, (err, wikis) => {
       if(err){
         console.log(err);
         res.redirect(500, "static/index");
@@ -12,25 +15,35 @@ module.exports = {
       }
     })
   },
+
   new(req, res, next){
       res.render("wikis/new");
    },
   create(req, res, next){
-     let newWiki= {
-       title: req.body.title,
-       body: req.body.body,
-       private: false,
-       userId: req.user.id
-     };
-     wikiQueries.addWiki(newWiki, (err, wiki) => {
-       if(err){
-         console.log(err);
-         res.redirect(500, "/wikis/new");
-       } else {
-         res.redirect(303, `/wikis/${wiki.id}`);
-       }
-     });
+     const authorized = new Authorizer(req.user).createPrivate();
+     console.log(req.body.private);
+     if (authorized || req.body.private == false || req.body.private == undefined) {
+       let newWiki= {
+         title: req.body.title,
+         body: req.body.body,
+         private: req.body.private ? req.body.private : false,
+         userId: req.user.id
+       };
+
+       wikiQueries.addWiki(newWiki, (err, wiki) => {
+         if(err){
+           console.log(err);
+           res.redirect(500, "/wikis/new");
+         } else {
+           res.redirect(303, `/wikis/${wiki.id}`);
+         }
+       });
+    } else {
+        req.flash("notice", "You are not authorized to do that.");
+        res.redirect("/wikis");
+    }
    },
+
     show(req, res, next){
          wikiQueries.getWiki(req.params.id, (err, wiki) => {
            if(err || wiki == null){
@@ -67,5 +80,14 @@ module.exports = {
           }
         });
       },
+  makePublic(req, res, next) {
+        wikiQueries.changeToPublic(req.params.id, (err, wiki) => {
+            if (err || wiki == null) {
+                res.redirect(500, `/wikis/${wiki.id}`);
+            } else {
+                res.redirect(303, `/wikis/`);
+            }
+        });
+    },
 
 }
