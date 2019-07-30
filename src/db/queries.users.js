@@ -58,7 +58,7 @@ module.exports = {
   },
 
   upgradeUser(id, callback) {
-        User.findById(id)
+        User.findByPk(id)
             .then(user => {
                 user.update({
                     role: 1

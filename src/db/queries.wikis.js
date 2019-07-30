@@ -87,12 +87,16 @@ module.exports = {
      },
 
      changeToPublic(id, callback) {
-       return Wiki.findById(id)
+       return Wiki.findByPk(id)
        .then(wiki => {
-         wiki.update({
+         return wiki.update({
            private: false
-         });
-         callback(null, wiki);
+         }, {
+            where: {
+             UserId: userId
+            }
+         })
+       .then(() => {callback(null, wiki)});
        })
        .catch(err => {
          console.log(err);
