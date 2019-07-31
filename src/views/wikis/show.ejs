@@ -10,6 +10,12 @@
 
     <main class="container p-3 mb-2 bg-white text-dark border border-dark">
       <h1><%= wiki.title %></h1>
+      <% if (wiki.private) { %>
+        <h4>View: Private</h4>
+      <% } else { %>
+        <h4>View: Public</h4>
+      <% } %>
+      <!-- <h2><%# wiki.user.username %></h2> -->
       <hr/>
 
         <%# if(currentUser.isAdmin()) { %>
@@ -23,7 +29,7 @@
         <%# } %>
       <hr/>
 
-      <p><%= wiki.body %></p>
+      <p><%- wiki.html %></p>
 
 
     </main>

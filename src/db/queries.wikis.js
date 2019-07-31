@@ -47,7 +47,7 @@ module.exports = {
   },
 
   getWiki(id, callback){
-    return Wiki.findByPk(id)
+    return Wiki.findByPk(id)    //, {include: [{model: User, as: 'user'}] }
      .then((wiki) => {
        callback(null, wiki);
      })

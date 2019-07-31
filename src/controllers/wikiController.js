@@ -2,6 +2,7 @@ const wikiQueries = require("../db/queries.wikis.js");
 const Authorizer = require("../policies/wiki");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
+const markdown = require( "markdown" ).markdown;
 
 module.exports = {
 
@@ -49,6 +50,7 @@ module.exports = {
            if(err || wiki == null){
              res.redirect(404, "/");
            } else {
+             wiki.html = markdown.toHTML(wiki.body);
              res.render("wikis/show", {wiki});
            }
          });

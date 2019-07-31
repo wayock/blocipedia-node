@@ -89,9 +89,14 @@
           <% wikis.forEach((wiki) => { %>
  <!-- #3 -->
             <li>
-              <a style="text-decoration: none; color: #0645AD ; border-bottom: 1px solid #0645AD ;"href="/wikis/<%= wiki.id %>">
+              <a style="text-decoration: underline; color: #0645AD ; "href="/wikis/<%= wiki.id %>">
                 <%= wiki.title %>
               </a>
+              <% if (wiki.private) { %>
+                 <ion-icon name="finger-print" style= "font-size: 18px;" ></ion-icon>
+              <% } else { %>
+                 <ion-icon name="people" style= "font-size: 18px;"></ion-icon>
+              <% } %>
             </li>
           <% }) %>
         <% } %>

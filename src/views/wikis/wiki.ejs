@@ -28,7 +28,13 @@
         <% wikis.forEach((wiki) => { %>
 <!-- #2 -->
           <li class="list-group-item ">
-            <a style="text-decoration: none; color: #0645AD ; border-bottom: 1px solid #0645AD;"  href="/wikis/<%= wiki.id %>"> <%= wiki.title %>  <%#= wiki.userId.username %> </a>
+            <a style="text-decoration: none; color: #0645AD ; border-bottom: 1px solid #0645AD;"  href="/wikis/<%= wiki.id %>"> <%= wiki.title %>  <%#= wiki.userId.username %>
+              <% if (wiki.private) { %>
+                 <ion-icon name="finger-print" style= "font-size: 18px;" ></ion-icon>
+              <% } else { %>
+                 <ion-icon name="people" style= "font-size: 18px;"></ion-icon>
+              <% } %>
+            </a>
           </li>
         <% }) %>
       </ul>
@@ -40,5 +46,6 @@
         -->
       </div>
     </footer>
+    <% include ../static/partials/baseScripts.ejs %>
   </body>
 </html>
