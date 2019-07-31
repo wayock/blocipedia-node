@@ -91,12 +91,7 @@ module.exports = {
        .then(wiki => {
          return wiki.update({
            private: false
-         }, {
-            where: {
-             UserId: userId
-            }
          })
-       .then(() => {callback(null, wiki)});
        })
        .catch(err => {
          console.log(err);

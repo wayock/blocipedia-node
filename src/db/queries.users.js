@@ -71,13 +71,13 @@ module.exports = {
     },
 
     downgradeUser(id, callback) {
-      User.findByPk(id)
+      User.findByPk(id, {include: {model:Wiki, as: 'wikis'}}) //needed to reference wikis in Wikis table
       .then(user => {
         user.update({
           role: 0
         });
         //iterate over user.wikis
-        //forEach set wikiQueries.changeToPublic
+        console.log(user.wikis);//forEach set wikiQueries.changeToPublic
         user.wikis.forEach(wiki => {
           wikiQueries.changeToPublic(wiki.id, () => {});
         });
