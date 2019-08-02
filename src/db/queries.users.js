@@ -1,5 +1,6 @@
 const User = require("./models").User;
 const Wiki = require("./models").Wiki;
+const Collaborator = require("./models").Collaborator;
 const wikiQueries = require("./queries.wikis.js");
 const bcrypt = require("bcryptjs");
 const sgMail = require('@sendgrid/mail');
@@ -85,6 +86,26 @@ module.exports = {
       })
       .catch(err => {
         callback(err);
+      });
+    },
+
+    getUserCollaborators(id, callback) {
+      let result = {};
+      User.findByPk(id).then(user => {
+        if (!user) {
+          callback(404);
+        } else {
+          result["user"] = user;
+          Collaborator.scope({ method: ["collaborationFor", id] })
+          .findAll()
+          .then(collaborations => {
+            result["collaborations"] = collaborations;
+            callback(null, result);
+          })
+          .catch(err => {
+            callback(err);
+          });
+        }
       });
     }
 }

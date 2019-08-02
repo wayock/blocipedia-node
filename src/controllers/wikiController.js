@@ -46,10 +46,14 @@ module.exports = {
    },
 
     show(req, res, next){
+
          wikiQueries.getWiki(req.params.id, (err, wiki) => {
            if(err || wiki == null){
              res.redirect(404, "/");
            } else {
+             if (req.user){
+               const authorized = new Authorizer(req.user, wiki);
+             };
              wiki.html = markdown.toHTML(wiki.body);
              res.render("wikis/show", {wiki});
            }

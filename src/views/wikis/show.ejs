@@ -17,16 +17,20 @@
       <% } %>
       <!-- <h2><%# wiki.user.username %></h2> -->
       <hr/>
+        <div>
+          <% if (currentUser && (currentUser.isAdmin() || (currentUser.isPremium() && currentUser.isOwner(wiki))) ) { %>
+            <a class="btn btn-info" href="/wikis/<%= wiki.id %>/collaborators/edit" >Edit Collaborators</a>
+          <% } %>
+        </div>
+        <div>
+          <% if (currentUser && (currentUser.isAdmin() || currentUser.isOwner(wiki) )) { %>
+            <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-warning text-white"><i class="material-icons">assignment</i>Edit</a>
 
-        <%# if(currentUser.isAdmin()) { %>
-
-          <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-warning text-white"><i class="material-icons">assignment</i>Edit</a>
-
-        <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
-          <button type="submit" class="btn btn-danger text-white"><i class="material-icons">delete</i>Delete</button>
-        </form>
-
-        <%# } %>
+            <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
+              <button type="submit" class="btn btn-danger text-white"><i class="material-icons">delete</i>Delete</button>
+            </form>
+          <% } %>
+        </div>
       <hr/>
 
       <p><%- wiki.html %></p>

@@ -24,7 +24,7 @@
           <small class="text-muted" id="bodyHelp">body must be 10 or more characters in length.</small>
         </div>
         <div>
-        <% if (currentUser.role == 1 || 2) { %>
+        <% if (currentUser.isAdmin() || currentUser.isPremium()) { %>
             <label for="private">View:</label>
               <select name="private"  id="private">
                 <option value=true>Private</option>

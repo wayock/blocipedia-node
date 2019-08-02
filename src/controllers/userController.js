@@ -2,6 +2,7 @@ const userQueries = require("../db/queries.users.js");
 const passport = require("passport");
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const publishableKey = process.env.PUBLISHABLE_KEY;
+const collaboratorQueries = require("../db/queries.collaborators.js");
 // (async () => {
 //   const charge = await stripe.charges.create({
 //
@@ -126,7 +127,7 @@ module.exports = {
         //console.log("charge", charge);
         if (charge) {
           userQueries.upgradeUser(req.params.id, (err, result) => {
-            console.log(result);  
+            console.log(result);
             req.flash("notice", "WooWho!!! You're a premium user! Start making your private wikis.");
             res.redirect("/users/" + req.user.id);
           });
@@ -154,7 +155,20 @@ module.exports = {
         res.redirect("/users/" + req.user.id);
       }
     });
+  },
+
+  showCollaborators(req, res, next) {
+        console.log(req);
+        console.log("showing collaborators");
+        userQueries.getUserCollaborators(req.user.id, (err, result) => {
+          console.log(result);
+            if (err || result == null) {
+              console.log(err);
+                res.redirect(404, "/");
+            } else {
+              console.log("rendering view");
+                res.render("users/collaborations", { ...result });
+            }
+        });
   }
-
-
 }

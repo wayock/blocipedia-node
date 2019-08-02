@@ -25,16 +25,23 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = function(models) {
     // associations can be defined here
     User.hasMany(models.Wiki, {
-       foreignKey: "userId",
-       as: "wikis"
-     });
+      foreignKey: "userId",
+      as: "wikis"
+    });
     User.prototype.isPremium = function() {
-     return this.role === 1;
+      return this.role === 1;
     };
 
     User.prototype.isAdmin = function() {
-     return this.role === 2;
-   };
+      return this.role === 2;
+    };
+    User.prototype.isOwner = function(wiki) {
+      return wiki.userId == this.id;
+    };
+    User.hasMany(models.Collaborator, {
+      foreignKey: 'userId',
+      as: 'collaborators'
+    });
   };
   return User;
 };
