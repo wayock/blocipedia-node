@@ -15,16 +15,26 @@
       <% } else { %>
         <h4>View: Public</h4>
       <% } %>
-      <!-- <h2><%# wiki.user.username %></h2> -->
+      <!-- <h2><%# wiki.user.username %></h2>
+      <%# if(collaborator && collaborator.length != 0){ %>
+        <h4>Collaborators:</h4>
+        <%# result.collaborator.forEach((user) => { %>
+          <li><%#= user.User.name %></li>
+        <%# }) %>
+      <%# } %>
+      -->
       <hr/>
 
           <% if (currentUser && (currentUser.isAdmin() || (currentUser.isPremium() && currentUser.isOwner(wiki))) ) { %>
             <a class="btn btn-info" href="/wikis/<%= wiki.id %>/collaborators/edit"><i class="material-icons">perm_identity</i>Edit Collaborators</a>
           <% } %>
 
-          <% if if(currentUser && (currentUser.id == wiki.userId || currentUser.isAdmin()))  { %>
+          <%# console.log('CURRENTUSER ID: ', currentUser.id); %>
+          <%# console.log('WIKI USERID: ', wiki.userId); %>
+
+          <%# if (currentUser && (currentUser.id === wiki.userId || currentUser.isAdmin()))  { %>
             <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-warning text-white"><i class="material-icons">assignment</i>Edit</a>
-          <% } %>
+          <%# } %>
           <% if (currentUser && (currentUser.isAdmin() || currentUser.isOwner(wiki) )) { %>
             <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
               <button type="submit" class="btn btn-danger text-white"><i class="material-icons">delete</i>Delete</button>

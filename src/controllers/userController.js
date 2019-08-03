@@ -163,7 +163,7 @@ module.exports = {
         userQueries.getUserCollaborators(req.user.id, (err, result) => {
           const collaborator = result.collaborator;
           const user = result.user;
-          console.log(result);
+          //console.log(result);
             if (err || result == null) {
               console.log(err);
                 res.redirect(404, "/");
