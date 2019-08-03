@@ -167,7 +167,7 @@ module.exports = {
                 res.redirect(404, "/");
             } else {
               console.log("rendering view");
-                res.render("users/collaborations", { ...result });
+                res.render("users/collaborators", { ...result });
             }
         });
   }

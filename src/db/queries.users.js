@@ -96,10 +96,10 @@ module.exports = {
           callback(404);
         } else {
           result["user"] = user;
-          Collaborator.scope({ method: ["collaborationFor", id] })
+          Collaborator.scope({ method: ["collaboratorFor", id] })
           .findAll()
-          .then(collaborations => {
-            result["collaborations"] = collaborations;
+          .then(collaborator => {
+            result["collaborator"] = collaborator;
             callback(null, result);
           })
           .catch(err => {
